@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
 export interface ApiUser {
   id: number;
@@ -102,7 +102,7 @@ async function apiRequest<T>(
 
 export const authApi = {
   signUp: (data: SignUpRequest): Promise<ApiUser> =>
-    apiRequest<ApiUser>('/auth/sign-up', {
+    apiRequest<ApiUser>('/api/auth/sign-up', {
       method: 'POST',
       body: JSON.stringify(data),
     }),
@@ -112,7 +112,7 @@ export const authApi = {
     formData.append('username', data.username);
     formData.append('password', data.password);
 
-    return apiRequest<AuthResponse>('/auth/sign-in', {
+    return apiRequest<AuthResponse>('/api/auth/sign-in', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -122,27 +122,27 @@ export const authApi = {
   },
 
   getMe: (): Promise<ApiUser> =>
-    apiRequest<ApiUser>('/auth/me'),
+    apiRequest<ApiUser>('/api/auth/me'),
 };
 
 export const tasksApi = {
   getTasks: (): Promise<ApiTask[]> =>
-    apiRequest<ApiTask[]>('/tasks/'),
+    apiRequest<ApiTask[]>('/api/tasks/'),
 
   createTask: (data: CreateTaskRequest): Promise<ApiTask> =>
-    apiRequest<ApiTask>('/tasks/', {
+    apiRequest<ApiTask>('/api/tasks/', {
       method: 'POST',
       body: JSON.stringify(data),
     }),
 
   updateTask: (id: number, data: UpdateTaskRequest): Promise<ApiTask> =>
-    apiRequest<ApiTask>(`/tasks/${id}`, {
+    apiRequest<ApiTask>(`/api/tasks/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
 
   deleteTask: (id: number): Promise<void> =>
-    apiRequest<void>(`/tasks/${id}`, {
+    apiRequest<void>(`/api/tasks/${id}`, {
       method: 'DELETE',
     }),
 }; 

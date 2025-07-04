@@ -10,11 +10,11 @@ app = FastAPI(title="ToDo API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(auth_router, prefix="/auth", tags=["auth"])
-app.include_router(tasks_router, prefix="/tasks", tags=["tasks"])
+app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
+app.include_router(tasks_router, prefix="/api/tasks", tags=["tasks"])
